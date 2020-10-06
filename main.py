@@ -27,7 +27,7 @@ from playsound import playsound
 
 pag.FAILSAFE = False
 # failsafe is disabled to allow program to run in background without being
-# accidently closed but user.
+# accidently closed by user.
 
 def main():
 
@@ -50,12 +50,14 @@ def methodSelect():
 
     option1 = 'manual time entry'
     option2 = 'interval based'
+    # set input choices. 
 
     selection = 'None'
     while selection != option1 and selection != option2:
         selection = pag.confirm('select timing method:', 'method selection',
                                 buttons = [option1, option2])
     return selection
+    # input validation loop. 
 
 def manualTimer():
 # timer will prompt user to enter a time, then alert user at desired time. 
@@ -63,30 +65,59 @@ def manualTimer():
     currentTime     = datetime.datetime.now()
     currentHour     = currentTime.hour
     currentMinute   = currentTime.minute
+    # get current time. 
 
-    chosenHour      = int(pag.prompt('enter alert hour:', 'hour prompt', 
-                                    currentHour))
-    chosenMinute    = int(pag.prompt('enter alert minute:', 'minute prompt', 
-                                    currentMinute))
+    chosenHour = -1
+    while chosenHour < 0 or chosenHour > 23:
+        try:
+            chosenHour = int(pag.prompt('enter alert hour: (0 - 23)', 
+                                        'hour prompt', currentHour))
+        except:
+            pass
+    # input validation and error handling for chosenHour input.
+
+    chosenMinute = -1
+    while chosenMinute < 0 or chosenMinute > 59:
+        try:
+            chosenMinute = int(pag.prompt('enter alert minute: (0 - 59', 
+                                        'minute prompt', currentMinute))
+        except:
+            pass
+    # input validation and error handling for chosenMinute input. 
     
-    if chosenHour == currentHour and chosenMinute == currentMinute:
-
-        alert()
+    while chosenHour != currentHour or chosenMinute != currentMinute: 
+        time.sleep(1)
+        currentTime     = datetime.datetime.now()
+        currentHour     = currentTime.hour
+        currentMinute   = currentTime.minute
+    # wait until desired alert time and then proceed with execution. 
+        
+    alert()
+    # display alert message. 
 
 def intervalTimer():
 # timer will prompt user to enter the amount of time in minutes to wait for,
 # then alert user at desired time. 
 
-    timerInterval = int(pag.prompt('enter alert interval in minutes:',
-                                  'interval prompt', 'XXX'))
+    timerInterval = -1
+    while timerInterval < 0:
+        try:
+            timerInterval = float(pag.prompt('enter alert interval in mins:',
+                                            'interval prompt', 'XXX'))
+        except:
+            pass
+    # input validation and error handling for interval input.
 
     time.sleep(timerInterval * 60)
+    # wait for the desired amount of time. 
 
     alert()
+    # display alert message. 
 
 def alert():
 # function will display an alert message, notifying user that time is up. 
 
     pag.alert('time is up!', 'alert', 'OK')
+    # displays alert message. 
 
 main()
