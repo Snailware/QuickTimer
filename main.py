@@ -147,3 +147,8 @@ def alertWindow():
     # displays alert window. 
 
 main()
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+#  this program was written by Adam Lancaster. ascii art made by Hayley Jane  #
+#            Wakenshaw. ascii title generated at www.patorjk.com.             #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
