@@ -22,26 +22,29 @@
 import datetime
 import time
 import sys
+import threading
 import pyautogui as pag
 from playsound import playsound
 
-pag.FAILSAFE = False
-# failsafe is disabled to allow program to run in background without being
-# accidently closed by user.
-
 def main():
 
+    pag.FAILSAFE = False
+    # failsafe is disabled to allow program to run in background without being
+    # accidently closed by user.
+
     selection = methodSelect()
+    # run 'method select' prompt.
 
     if selection == 'manual time entry':
-
         manualTimer()
+    # execute if selection is 'manual time entry'.
 
     else:
-
         intervalTimer()
+    # execute if selection is NOT 'manual time entry'.
 
     sys.exit()
+    # close program.
 
 def methodSelect():
 # function will display a window prompting user to select 'manual entry' or 
@@ -117,7 +120,30 @@ def intervalTimer():
 def alert():
 # function will display an alert message, notifying user that time is up. 
 
+    thread1 = threading.Thread(target= alertSFX)
+    thread2 = threading.Thread(target= alertWindow)
+    # create 2 threads to allow alertSFX and alertWindow to execute
+    # simultaneously. 
+
+    thread1.start()
+    thread2.start()
+    # start threads simultaneously.
+
+    thread1.join()
+    thread2.join()
+    # wait until both threads finish, then continue execution.
+
+
+def alertSFX():
+# play alert sound effect.
+
+    playsound('alert - radio.wav')
+    # play alert sound effect. 
+
+def alertWindow():
+# display alert window. 
+
     pag.alert('time is up!', 'alert', 'OK')
-    # displays alert message. 
+    # displays alert window. 
 
 main()
