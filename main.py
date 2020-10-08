@@ -13,7 +13,7 @@
 #                                      #                                      #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #                                                                             #
-#       program will take accept input times in the form of a set time, or    #
+#       program will accept input times in the form of a set time, or         #
 #   interval. at desired time, program will produce a pop up window and play  #
 #   a sound effect to alert user.                                             #
 #                                                                             #
@@ -21,7 +21,6 @@
 
 import datetime
 import time
-import sys
 import threading
 import pyautogui as pag
 from playsound import playsound
@@ -43,7 +42,7 @@ def main():
         intervalTimer()
     # execute if selection is NOT 'manual time entry'.
 
-    sys.exit()
+    exit()
     # close program.
 
 def methodSelect():
@@ -96,7 +95,7 @@ def manualTimer():
     # wait until desired alert time and then proceed with execution. 
         
     alert()
-    # display alert message. 
+    # play sfx and display alert window.  
 
 def intervalTimer():
 # timer will prompt user to enter the amount of time in minutes to wait for,
@@ -133,7 +132,6 @@ def alert():
     thread2.join()
     # wait until both threads finish, then continue execution.
 
-
 def alertSFX():
 # play alert sound effect.
 
@@ -147,6 +145,7 @@ def alertWindow():
     # displays alert window. 
 
 main()
+# execute program. 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #  this program was written by Adam Lancaster. ascii art made by Hayley Jane  #
